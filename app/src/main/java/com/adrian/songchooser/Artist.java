@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Artist {
-    String artistName;
-    List<Album> albumList;
+    public String artistName;
+    public List<Album> albumList;
 
     Artist(){
         this.artistName = "No Artist";

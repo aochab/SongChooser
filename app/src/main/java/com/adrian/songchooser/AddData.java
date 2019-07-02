@@ -7,13 +7,25 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddData extends AppCompatActivity {
 
     private TextInputLayout textInputArtist;
     private TextInputLayout textInputAlbum;
-    private TextInputLayout textInputGenre;
     private TextInputLayout textInputSong;
+
+    private String artistInput;
+    private String albumInput;
+    private String songInput;
+
+    public ArtistsList artists;
+    public Artist artist;
+    public Album album;
+    public Song song;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +34,34 @@ public class AddData extends AppCompatActivity {
 
         textInputArtist = findViewById(R.id.text_input_artist);
         textInputAlbum = findViewById(R.id.text_input_album);
-        textInputGenre = findViewById(R.id.text_input_genre);
         textInputSong = findViewById(R.id.text_input_song);
+
+        String json = getIntent().getStringExtra("artists");
+        artists = new Gson().fromJson(json,ArtistsList.class);
 
     }
 
-    private boolean validateArtist(){
-        String artistInput = textInputArtist.getEditText().getText().toString();
+    public void confirmInput(View view){
+        getData();
+        if( !validateArtist() | !validateAlbum() | !validateSong() ){
+            return;
+        }
 
+        String input = "Artist: " + artistInput + "\n";
+        input += "Album: " + albumInput + "\n";
+        input += "Song: " + songInput;
+
+        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+        addSongToList(artistInput,albumInput,songInput);
+    }
+
+    private void getData(){
+        artistInput = textInputArtist.getEditText().getText().toString();
+        albumInput = textInputAlbum.getEditText().getText().toString();
+        songInput = textInputSong.getEditText().getText().toString();
+    }
+
+    private boolean validateArtist(){
         if(artistInput.isEmpty()){
             textInputArtist.setError("Field can't be empty");
             return false;
@@ -40,8 +72,6 @@ public class AddData extends AppCompatActivity {
     }
 
     private boolean validateAlbum(){
-        String albumInput = textInputAlbum.getEditText().getText().toString();
-
         if(albumInput.isEmpty()){
             textInputAlbum.setError("Field can't be empty");
             return false;
@@ -51,21 +81,7 @@ public class AddData extends AppCompatActivity {
         }
     }
 
-    private boolean validateGenre(){
-        String artistInput = textInputGenre.getEditText().getText().toString();
-
-        if(artistInput.isEmpty()){
-            textInputGenre.setError("Field can't be empty");
-            return false;
-        }else{
-            textInputGenre.setError(null);
-            return true;
-        }
-    }
-
     private boolean validateSong(){
-        String songInput = textInputSong.getEditText().getText().toString();
-
         if(songInput.isEmpty()){
             textInputSong.setError("Field can't be empty");
             return false;
@@ -75,16 +91,38 @@ public class AddData extends AppCompatActivity {
         }
     }
 
-    public void confirmInput(View view){
-        if( !validateArtist() | !validateAlbum() | !validateGenre() | !validateSong() ){
-            return;
+    private void addSongToList(String artistInput,String albumInput,String songInput){
+        for(Artist a: artists.artistList){
+            if(a.artistName.equals(artistInput)){
+                artist = a;
+                break;
+            }
+        }
+        if(artist == null){
+            artist = new Artist(artistInput);
+            artists.addArtist(artist);
         }
 
-        String input = "Artist: " + textInputArtist.getEditText().getText().toString() + "\n";
-        input += "Album: " + textInputAlbum.getEditText().getText().toString() + "\n";
-        input += "Song: " + textInputSong.getEditText().getText().toString() + "\n";
-        input += "Genre: " + textInputGenre.getEditText().getText().toString() + "\n";
+        for(Album a: artist.albumList){
+            if(a.albumName.equals(albumInput)){
+                album = a;
+                break;
+            }
+        }
+        if(album == null){
+            album = new Album(albumInput);
+            artist.addAlbum(album);
+        }
 
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+        for(Song s: album.trackList){
+            if(s.title.equals(songInput)){
+                song = s;
+                break;
+            }
+        }
+        if(song == null){
+            song = new Song(songInput);
+            album.addSong(song);
+        }
     }
 }
