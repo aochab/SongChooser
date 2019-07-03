@@ -2,14 +2,18 @@ package com.adrian.songchooser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddData extends AppCompatActivity {
@@ -23,14 +27,20 @@ public class AddData extends AppCompatActivity {
     private String songInput;
 
     public ArtistsList artists;
-    public Artist artist;
-    public Album album;
-    public Song song;
+
+    private ListView playlist;
+    private ArrayAdapter<String> adapter;
+
+    private String jsonToPlaylistActivity;
+    ManageDatabase database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_data);
+
+        playlist = (ListView)findViewById(R.id.playlist);
 
         textInputArtist = findViewById(R.id.text_input_artist);
         textInputAlbum = findViewById(R.id.text_input_album);
@@ -39,6 +49,7 @@ public class AddData extends AppCompatActivity {
         String json = getIntent().getStringExtra("artists");
         artists = new Gson().fromJson(json,ArtistsList.class);
 
+        database = ManageDatabase.getInstance(this);
     }
 
     public void confirmInput(View view){
@@ -51,8 +62,14 @@ public class AddData extends AppCompatActivity {
         input += "Album: " + albumInput + "\n";
         input += "Song: " + songInput;
 
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
-        addSongToList(artistInput,albumInput,songInput);
+
+        if(addSongToList(artistInput,albumInput,songInput)){
+            Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "This song is already added to playlist", Toast.LENGTH_SHORT).show();
+        }
+
+        database.addSong(artistInput,albumInput,songInput);
     }
 
     private void getData(){
@@ -91,7 +108,11 @@ public class AddData extends AppCompatActivity {
         }
     }
 
-    private void addSongToList(String artistInput,String albumInput,String songInput){
+    private boolean addSongToList(String artistInput,String albumInput,String songInput){
+        Artist artist = null;
+        Album album = null;
+        Song song = null;
+
         for(Artist a: artists.artistList){
             if(a.artistName.equals(artistInput)){
                 artist = a;
@@ -123,6 +144,10 @@ public class AddData extends AppCompatActivity {
         if(song == null){
             song = new Song(songInput);
             album.addSong(song);
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }

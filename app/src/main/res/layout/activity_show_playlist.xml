@@ -14,10 +14,10 @@
         android:textAlignment="center"/>
 
 
-    <ListView
-        android:id="@+id/playlist"
+    <TextView
+        android:id="@+id/playlist1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="wrap_content"
+        android:textSize="15dp"/>
 
 </LinearLayout>

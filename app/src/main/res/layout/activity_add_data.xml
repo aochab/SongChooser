@@ -58,4 +58,10 @@
         android:onClick="confirmInput"
         android:textSize="20dp"
         android:layout_margin="20dp"/>
+
+    <ListView
+        android:id="@+id/playlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.adrian.songchooser;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openShowPlaylist() {
         Intent intent = new Intent(this, ShowPlaylist.class);
-        intent.putExtra("artists", json);
+        //intent.putExtra("artists", json);
         startActivity(intent);
     }
 
@@ -71,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Random.class);
         intent.putExtra("artists", json);
         startActivity(intent);
+    }
+
+    private void openDataBase(){
+        SQLiteDatabase myDB = openOrCreateDatabase("my.db",MODE_PRIVATE,null);
+        myDB.execSQL("CREATE TABLE IF NOT EXISTS user (artist String, Album String, Song String)");
     }
 }
 
