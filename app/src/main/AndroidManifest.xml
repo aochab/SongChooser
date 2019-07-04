@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Random"></activity>
+        <activity android:name=".RandomSong"></activity>
         <activity android:name=".ShowPlaylist" />
         <activity android:name=".AddData" />
         <activity android:name=".MainActivity">

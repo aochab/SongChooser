@@ -54,19 +54,19 @@ public class ManageDatabase extends SQLiteOpenHelper {
     }
 
     public Song getSong(int nr){
-        Song playlist = new Song();
-        SQLiteDatabase database = getWritableDatabase();
+        Song song = new Song();
+        SQLiteDatabase database = getReadableDatabase();
         String[] columns = {"nr","artist","album","song"};
         String[] args = {nr+""};
         Cursor cursor = database.query(DATABASE_TABLE,columns," nr=?",args,null,null,null,null);
         if(cursor!=null){
             cursor.moveToFirst();
-            playlist.setNr(cursor.getInt(0));
-            playlist.setArtistName(cursor.getString(1));
-            playlist.setAlbumName(cursor.getString(2));
-            playlist.setSongName(cursor.getString(3));
+            song.setNr(cursor.getInt(0));
+            song.setArtistName(cursor.getString(1));
+            song.setAlbumName(cursor.getString(2));
+            song.setSongName(cursor.getString(3));
         }
-        return playlist;
+        return song;
     }
 
     public List<Song> getAllSongs(){

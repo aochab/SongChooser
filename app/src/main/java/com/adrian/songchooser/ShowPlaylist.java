@@ -20,5 +20,6 @@ public class ShowPlaylist extends AppCompatActivity {
         for(Song song: database.getAllSongs()) {
             playlist.setText(playlist.getText() + "\n" + song.getNr() + " " + song.getArtistName() + " " + song.getAlbumName() + " " + song.getSongName());
         }
+
     }
 }

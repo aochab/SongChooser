@@ -100,4 +100,10 @@ public class AddData extends AppCompatActivity {
         }
         return true;
     }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        finish();
+    }
 }

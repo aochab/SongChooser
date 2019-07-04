@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openRandom() {
-        Intent intent = new Intent(this, Random.class);
+        Intent intent = new Intent(this, RandomSong.class);
         intent.putExtra("artists", json);
         startActivity(intent);
     }
