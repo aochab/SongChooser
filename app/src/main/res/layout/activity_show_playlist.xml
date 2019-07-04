@@ -15,7 +15,7 @@
 
 
     <TextView
-        android:id="@+id/playlist1"
+        android:id="@+id/playlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15dp"/>
