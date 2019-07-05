@@ -4,20 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".ShowPlaylist">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="PLAYLIST"
-        android:textSize="20dp"
+        android:textSize="35dp"
         android:textAlignment="center"/>
 
-
-    <TextView
+    <ListView
         android:id="@+id/playlist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"/>
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>
