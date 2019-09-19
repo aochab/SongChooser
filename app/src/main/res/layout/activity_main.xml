@@ -24,6 +24,15 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/mediaPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Media Player"
+            android:textSize="20dp"
+            android:layout_margin="35dp"
+            android:textColor="@color/colorText"/>
+
+        <Button
             android:id="@+id/showPlaylist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -49,6 +58,7 @@
             android:textSize="20dp"
             android:layout_margin="35dp"
             android:textColor="@color/colorText"/>
+
 
     </LinearLayout>
 

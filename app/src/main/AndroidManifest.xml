@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.adrian.songchooser">
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -9,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".MediaPlayerService" />
         <activity android:name=".RandomSong"></activity>
         <activity android:name=".ShowPlaylist" />
         <activity android:name=".AddData" />
